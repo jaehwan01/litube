@@ -1,12 +1,6 @@
 extends base
 include mixins/video
 
-block nav
-    nav 
-        ul 
-            li 
-                a(href="/videos/upload") Upload Video
-
 block content
     each item in videos
         +video(item)

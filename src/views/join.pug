@@ -1,0 +1,67 @@
+extends base
+
+block content
+    if errorMessageUsername && errorMessageEmail
+        form(method="POST")
+            input(name="name", placeholder="Name", type="text", required, value=`${name}`)
+            span=errorMessageEmail
+            input(name="email", placeholder="Email", type="email", required, value=`${email}`)
+            span=errorMessageUsername
+            input(name="username", placeholder="Username", type="text", required, value=`${username}`)
+            input(name="password", placeholder="Password", type="password", required)
+            input(name="password2", placeholder="Confirm Password", type="password", required)
+            input(name="location", placeholder="Location", type="text", value=`${location}`)
+            input(type="submit", value="Create User")
+    else if errorMessageUsername
+        form(method="POST")
+            input(name="name", placeholder="Name", type="text", required, value=`${name}`)
+            input(name="email", placeholder="Email", type="email", required, value=`${email}`)
+            span=errorMessageUsername
+            input(name="username", placeholder="Username", type="text", required, value=`${username}`)
+            input(name="password", placeholder="Password", type="password", required)
+            input(name="password2", placeholder="Confirm Password", type="password", required)
+            input(name="location", placeholder="Location", type="text", value=`${location}`)
+            input(type="submit", value="Create User")
+    else if errorMessageEmail
+        form(method="POST")
+            input(name="name", placeholder="Name", type="text", required, value=`${name}`)
+            span=errorMessageEmail
+            input(name="email", placeholder="Email", type="email", required, value=`${email}`)
+            input(name="username", placeholder="Username", type="text", required, value=`${username}`)
+            input(name="password", placeholder="Password", type="password", required)
+            input(name="password2", placeholder="Confirm Password", type="password", required)
+            input(name="location", placeholder="Location", type="text", value=`${location}`)
+            input(type="submit", value="Create User")
+    else if errorMessagePassword
+        form(method="POST")
+            input(name="name", placeholder="Name", type="text", required, value=`${name}`)
+            input(name="email", placeholder="Email", type="email", required, value=`${email}`)
+            input(name="username", placeholder="Username", type="text", required, value=`${username}`)
+            span=errorMessagePassword
+            input(name="password", placeholder="Password", type="password", required)
+            input(name="password2", placeholder="Confirm Password", type="password", required)
+            input(name="location", placeholder="Location", type="text", value=`${location}`)
+            input(type="submit", value="Create User")
+    else if errorMessage
+        span=errorMessage
+        form(method="POST")
+            input(name="name", placeholder="Name", type="text", required, value=`${name}`)
+            input(name="email", placeholder="Email", type="email", required, value=`${email}`)
+            input(name="username", placeholder="Username", type="text", required, value=`${username}`)
+            input(name="password", placeholder="Password", type="password", required)
+            input(name="password2", placeholder="Confirm Password", type="password", required)
+            input(name="location", placeholder="Location", type="text", value=`${location}`)
+            input(type="submit", value="Create User")
+    else
+        form(method="POST")
+            input(name="name", placeholder="Name", type="text", required)
+            input(name="email", placeholder="Email", type="email", required)
+            input(name="username", placeholder="Username", type="text", required)
+            input(name="password", placeholder="Password", type="password", required)
+            input(name="password2", placeholder="Confirm Password", type="password", required)
+            input(name="location", placeholder="Location", type="text")
+            input(type="submit", value="Create User")
+        hr
+        div 
+            span Already have an account?   
+            a(href="/login")   Log in now &rarr;
