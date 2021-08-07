@@ -1,9 +1,50 @@
 extends base
 
 block content
-    form(method="POST")
-        input(name="name", placeholder="Name", type="text", required value=loggedInUser.name)
-        input(name="email" placeholder="Email" type="email" required value=loggedInUser.email)
-        input(name="username", placeholder="Username", type="text", required value=loggedInUser.username)
-        input(name="location", placeholder="Location", type="text" required value=loggedInUser.location)
-        input(type="submit" value="Update Profile")
+    if loggedInUser.socialOnly
+        if errorMessageUsername
+            form(method="POST")
+                input(name="name", placeholder="Name", type="text", required value=`${name}`)
+                span=errorMessageUsername
+                input(name="username", placeholder="Username", type="text", required value=`${username}`)
+                input(name="location", placeholder="Location", type="text" required value=`${location}`)
+                input(type="submit" value="Update Profile")
+        else
+            form(method="POST")
+                input(name="name", placeholder="Name", type="text", required value=loggedInUser.name)
+                input(name="username", placeholder="Username", type="text", required value=loggedInUser.username)
+                input(name="location", placeholder="Location", type="text" required value=loggedInUser.location)
+                input(type="submit" value="Update Profile")
+    else 
+        if errorMessageUsername && errorMessageEmail
+            form(method="POST")
+                input(name="name", placeholder="Name", type="text", required value=`${name}`)
+                span=errorMessageEmail
+                input(name="email" placeholder="Email" type="email" required value=`${email}`)
+                span=errorMessageUsername
+                input(name="username", placeholder="Username", type="text", required value=`${username}`)
+                input(name="location", placeholder="Location", type="text" required value=`${location}`)
+                input(type="submit" value="Update Profile")
+        else if errorMessageUsername
+            form(method="POST")
+                input(name="name", placeholder="Name", type="text", required value=`${name}`)
+                input(name="email" placeholder="Email" type="email" required value=`${email}`)
+                span=errorMessageUsername
+                input(name="username", placeholder="Username", type="text", required value=`${username}`)
+                input(name="location", placeholder="Location", type="text" required value=`${location}`)
+                input(type="submit" value="Update Profile")
+        else if errorMessageEmail
+            form(method="POST")
+                input(name="name", placeholder="Name", type="text", required value=`${name}`)
+                span=errorMessageEmail
+                input(name="email" placeholder="Email" type="email" required value=`${email}`)
+                input(name="username", placeholder="Username", type="text", required value=`${username}`)
+                input(name="location", placeholder="Location", type="text" required value=`${location}`)
+                input(type="submit" value="Update Profile")
+        else 
+            form(method="POST")
+                input(name="name", placeholder="Name", type="text", required value=loggedInUser.name)
+                input(name="email" placeholder="Email" type="email" required value=loggedInUser.email)
+                input(name="username", placeholder="Username", type="text", required value=loggedInUser.username)
+                input(name="location", placeholder="Location", type="text" required value=loggedInUser.location)
+                input(type="submit" value="Update Profile")

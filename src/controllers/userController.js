@@ -5,6 +5,16 @@ import bcrypt from "bcrypt";
 export const getJoin = (req, res) => res.render("join", { pageTitle: "Join" });
 export const postJoin = async (req, res) => {
   const { name, username, email, password, password2, location } = req.body;
+  if (password === "" || password2 === "") {
+    return res.status(400).render("join", {
+      pageTitle: "Join",
+      errorMessagePassword: "Password is null.",
+      name,
+      username,
+      email,
+      location,
+    });
+  }
   if (password !== password2) {
     return res.status(400).render("join", {
       pageTitle: "Join",
@@ -169,24 +179,183 @@ export const getEditProfile = (req, res) => {
   return res.render("edit-profile", { pageTitle: "Edit Profile" });
 };
 export const postEditProfile = async (req, res) => {
+  // 깃허브 로그인인 경우
+  if (req.session.user.socialOnly) {
+    const {
+      session: {
+        user: { _id },
+      },
+      body: { name, username, location },
+    } = req;
+    // username 변경없이 다른 것들을 변경하려는 경우
+    if (req.session.user.username === username) {
+      const updateUser = await User.findByIdAndUpdate(
+        _id,
+        {
+          name,
+          location,
+        },
+        { new: true }
+      );
+      req.session.user = updateUser;
+      return res.redirect("/users/edit");
+    }
+    // username을 변경하려는 경우(db에 없는 username)
+    if (req.session.user.username !== username) {
+      const exists = await User.exists({ username });
+      if (exists) {
+        return res.status(400).render("edit-profile", {
+          pageTitle: "Edit Profile",
+          errorMessageUsername: "This username is already taken.",
+          name,
+          username,
+          location,
+        });
+      } else {
+        const updateUser = await User.findByIdAndUpdate(
+          _id,
+          {
+            name,
+            username,
+            location,
+          },
+          { new: true }
+        );
+        req.session.user = updateUser;
+        return res.redirect("/users/edit");
+      }
+    }
+  }
+  // 일반 로그인인 경우
   const {
     session: {
       user: { _id },
     },
     body: { name, email, username, location },
   } = req;
-  const updateUser = await User.findByIdAndUpdate(
-    _id,
-    {
-      name,
-      email,
-      username,
-      location,
-    },
-    { new: true }
-  );
-  req.session.user = updateUser;
-  return res.redirect("/users/edit");
+  // email, username 변경없는 경우
+  if (
+    req.session.user.email === email &&
+    req.session.user.username === username
+  ) {
+    const updateUser = await User.findByIdAndUpdate(
+      _id,
+      {
+        name,
+        location,
+      },
+      { new: true }
+    );
+    req.session.user = updateUser;
+    return res.redirect("/users/edit");
+  }
+  // email 변경없이 username 변경하는 경우
+  if (
+    req.session.user.email === email &&
+    req.session.user.username !== username
+  ) {
+    const exists = await User.exists({ username });
+    if (exists) {
+      return res.status(400).render("edit-profile", {
+        pageTitle: "Edit Profile",
+        errorMessageUsername: "This username is already taken.",
+        name,
+        email,
+        username,
+        location,
+      });
+    }
+    const updateUser = await User.findByIdAndUpdate(
+      _id,
+      {
+        name,
+        username,
+        location,
+      },
+      { new: true }
+    );
+    req.session.user = updateUser;
+    return res.redirect("/users/edit");
+  }
+  // username 변경없이 email 변경하는 경우
+  if (
+    req.session.user.email !== email &&
+    req.session.user.username === username
+  ) {
+    const exists = await User.exists({ email });
+    if (exists) {
+      return res.status(400).render("edit-profile", {
+        pageTitle: "Edit Profile",
+        errorMessageEmail: "This email is already taken.",
+        name,
+        email,
+        username,
+        location,
+      });
+    }
+    const updateUser = await User.findByIdAndUpdate(
+      _id,
+      {
+        name,
+        email,
+        location,
+      },
+      { new: true }
+    );
+    req.session.user = updateUser;
+    return res.redirect("/users/edit");
+  }
+  // email, username 둘다 변경하는 경우
+  if (
+    req.session.user.email !== email &&
+    req.session.user.username !== username
+  ) {
+    const existsEamil = await User.exists({ email });
+    const existsUsername = await User.exists({ username });
+    if (existsEamil && existsUsername) {
+      return res.status(400).render("edit-profile", {
+        pageTitle: "Edit Profile",
+        errorMessageEmail: "This email is already taken.",
+        errorMessageUsername: "This username is already taken.",
+        name,
+        email,
+        username,
+        location,
+      });
+    }
+    if (existsEamil) {
+      return res.status(400).render("edit-profile", {
+        pageTitle: "Edit Profile",
+        errorMessageEmail: "This email is already taken.",
+        name,
+        email,
+        username,
+        location,
+      });
+    }
+    if (existsUsername) {
+      return res.status(400).render("edit-profile", {
+        pageTitle: "Edit Profile",
+        errorMessageUsername: "This username is already taken.",
+        name,
+        email,
+        username,
+        location,
+      });
+    }
+    const updateUser = await User.findByIdAndUpdate(
+      _id,
+      {
+        name,
+        email,
+        username,
+        location,
+      },
+      { new: true }
+    );
+    req.session.user = updateUser;
+    return res.redirect("/users/edit");
+  }
 };
 export const logout = (req, res) => {
   req.session.destroy();
