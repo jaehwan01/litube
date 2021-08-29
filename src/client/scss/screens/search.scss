@@ -1,0 +1,36 @@
+.search__form {
+  margin-bottom: 60px;
+  display: flex;
+  position: relative;
+  align-items: center;
+  input {
+    all: unset;
+    padding: 15px 20px;
+    border-radius: 3px;
+    border: 1px solid rgba(33, 46, 3, 0.301);
+    background-color: navy;
+    margin-bottom: 5px;
+    font-size: 16px;
+    color: gold;
+    width: 90%;
+  }
+  button {
+    all: unset;
+  }
+  button {
+    padding: 17px 17px;
+    position: absolute;
+    border-radius: 3px;
+    top: 30.4px;
+    right: 30.1px;
+    font-size: 18px;
+    background-color: rgba(0, 0, 0, 0);
+    color: whitesmoke;
+    text-align: center;
+    cursor: pointer;
+    &:hover {
+      color: white;
+      background-color: skyblue;
+    }
+  }
+}

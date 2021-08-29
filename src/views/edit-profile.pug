@@ -3,21 +3,28 @@ extends base
 block content
     if loggedInUser.socialOnly
         if errorMessageUsername
-            form(method="POST")
+            form(method="POST" enctype="multipart/form-data").edit-profile__form
+                label(for="avatar") Avatar
+                input(name="avatar" type="file" id="avatar" accept="image/*")
                 input(name="name", placeholder="Name", type="text", required value=`${name}`)
                 span=errorMessageUsername
                 input(name="username", placeholder="Username", type="text", required value=`${username}`)
                 input(name="location", placeholder="Location", type="text" required value=`${location}`)
                 input(type="submit" value="Update Profile")
         else
-            form(method="POST")
+            //- img(src="/" + loggedInUser.avatarUrl, width="100", height="100")
+            form(method="POST" enctype="multipart/form-data").edit-profile__form
+                label(for="avatar") Avatar
+                input(name="avatar" type="file" id="avatar" accept="image/*")
                 input(name="name", placeholder="Name", type="text", required value=loggedInUser.name)
                 input(name="username", placeholder="Username", type="text", required value=loggedInUser.username)
                 input(name="location", placeholder="Location", type="text" required value=loggedInUser.location)
                 input(type="submit" value="Update Profile")
     else 
         if errorMessageUsername && errorMessageEmail
-            form(method="POST")
+            form(method="POST" enctype="multipart/form-data").edit-profile__form
+                label(for="avatar") Avatar
+                input(name="avatar" type="file" id="avatar" accept="image/*")
                 input(name="name", placeholder="Name", type="text", required value=`${name}`)
                 span=errorMessageEmail
                 input(name="email" placeholder="Email" type="email" required value=`${email}`)
@@ -25,26 +32,41 @@ block content
                 input(name="username", placeholder="Username", type="text", required value=`${username}`)
                 input(name="location", placeholder="Location", type="text" required value=`${location}`)
                 input(type="submit" value="Update Profile")
+                div.edit-profile__password
+                    a(href="change-password") Change Password &rarr;
         else if errorMessageUsername
-            form(method="POST")
+            form(method="POST" enctype="multipart/form-data").edit-profile__form
+                label(for="avatar") Avatar
+                input(name="avatar" type="file" id="avatar" accept="image/*")
                 input(name="name", placeholder="Name", type="text", required value=`${name}`)
                 input(name="email" placeholder="Email" type="email" required value=`${email}`)
                 span=errorMessageUsername
                 input(name="username", placeholder="Username", type="text", required value=`${username}`)
                 input(name="location", placeholder="Location", type="text" required value=`${location}`)
                 input(type="submit" value="Update Profile")
+                div.edit-profile__password
+                    a(href="change-password") Change Password &rarr;
         else if errorMessageEmail
-            form(method="POST")
+            form(method="POST" enctype="multipart/form-data").edit-profile__form
+                label(for="avatar") Avatar
+                input(name="avatar" type="file" id="avatar" accept="image/*")
                 input(name="name", placeholder="Name", type="text", required value=`${name}`)
                 span=errorMessageEmail
                 input(name="email" placeholder="Email" type="email" required value=`${email}`)
                 input(name="username", placeholder="Username", type="text", required value=`${username}`)
                 input(name="location", placeholder="Location", type="text" required value=`${location}`)
                 input(type="submit" value="Update Profile")
+                div.edit-profile__password
+                    a(href="change-password") Change Password &rarr;
         else 
-            form(method="POST")
+            //- img(src="/" + loggedInUser.avatarUrl, width="100", height="100")
+            form(method="POST" enctype="multipart/form-data").edit-profile__form
+                label(for="avatar") Avatar
+                input(name="avatar" type="file" id="avatar" accept="image/*")
                 input(name="name", placeholder="Name", type="text", required value=loggedInUser.name)
                 input(name="email" placeholder="Email" type="email" required value=loggedInUser.email)
                 input(name="username", placeholder="Username", type="text", required value=loggedInUser.username)
                 input(name="location", placeholder="Location", type="text" required value=loggedInUser.location)
                 input(type="submit" value="Update Profile")
+                div.edit-profile__password
+                    a(href="change-password") Change Password &rarr;

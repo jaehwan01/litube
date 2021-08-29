@@ -1,0 +1,40 @@
+form {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 30px;
+  background-color: rgba($color: #000000, $alpha: 0.2);
+  border-radius: 7px;
+  border: 1px solid rgba($color: #000000, $alpha: 0.2);
+}
+
+input {
+  all: unset;
+  padding: 15px 20px;
+  border-radius: 3px;
+  border: 1px solid rgba(33, 46, 3, 0.301);
+  background-color: rgba($color: navy, $alpha: 0.9);
+  margin-bottom: 5px;
+  font-size: 16px;
+  color: gold;
+  width: 90%;
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.8);
+  }
+}
+
+input[type="submit"],
+.social__btn {
+  border-radius: 3px;
+  padding: 12px 20px;
+  background-color: rgba($color: #7e5028, $alpha: 0.9);
+  text-align: center;
+  cursor: pointer;
+  display: block;
+}
+
+label {
+  font-size: 14px;
+  margin-bottom: 10px;
+  display: block;
+  font-weight: 500;
+}

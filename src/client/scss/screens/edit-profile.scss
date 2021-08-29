@@ -1,0 +1,18 @@
+.edit-profile__form {
+  label {
+    font-size: 14px;
+    margin-bottom: 10px;
+    display: block;
+    font-weight: 500;
+  }
+}
+
+.edit-profile__password {
+  margin-top: 50px;
+  text-align: end;
+  font-weight: 700;
+  color: black;
+  a {
+    text-decoration: underline;
+  }
+}
